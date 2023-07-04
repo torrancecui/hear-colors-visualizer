@@ -1,0 +1,28 @@
+.App {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
+  font-family: Baskerville, "Baskerville Old Face";
+}
+
+.Header {
+  font-size: 6vh;
+}
+
+button {
+  font-family: Baskerville, "Baskerville Old Face";
+}
+
+.Canvas {
+  height: 50vh;
+  width: 50vw;
+}
+
+.Buttons {
+  width: 10vw;
+  display: flex;
+  justify-content: space-between;
+}
