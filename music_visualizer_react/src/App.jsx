@@ -76,7 +76,7 @@ export default function App() {
           <ColorBar></ColorBar>
         </Canvas>
       </div>
-      <div>current notes: {...selectedNotes}</div>
+      <div>DEBUG - current notes: {...selectedNotes}</div>
       <div className="Buttons">
         <button
           onClick={playSynth}
