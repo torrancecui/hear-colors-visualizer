@@ -4,16 +4,6 @@ import { Canvas, useFrame } from "@react-three/fiber";
 import { colorNoteMapping } from "../colorNoteMapping";
 import "./App.css";
 
-function ColorSphere(props) {
-  const ref = useRef();
-  return (
-    <mesh {...props} ref={ref} scale={props.selected ? 1.3 : 1}>
-      <sphereGeometry args={[0.5, 32, 16]} />
-      <meshStandardMaterial color={props.color} />
-    </mesh>
-  );
-}
-
 export default function App() {
   const filter = new Tone.Filter(1000, "lowpass").toDestination();
   const reverb = new Tone.Reverb(6).connect(filter);
@@ -54,11 +44,26 @@ export default function App() {
           position={[index, 0, 0]}
           color={hexColor}
           onClick={() => processClick(noteName)}
+          noteName={noteName}
         ></ColorSphere>
       );
       index += 1;
     }
     return colorBar;
+  }
+
+  function ColorSphere(props) {
+    const ref = useRef();
+    return (
+      <mesh
+        {...props}
+        ref={ref}
+        scale={props.noteName in selectedNotes ? 1.3 : 1}
+      >
+        <sphereGeometry args={[0.5, 32, 16]} />
+        <meshStandardMaterial color={props.color} />
+      </mesh>
+    );
   }
 
   return (
