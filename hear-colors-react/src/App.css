@@ -1,10 +1,35 @@
 .App {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   justify-content: space-around;
+  align-items: left;
+  font-family: Helvetica, Arial, sans-serif;
+  padding: 20px;
 }
 
 .Header {
-  font-size: 15em;
-  font-family: Helvetica, Arial, sans-serif;
+  font-size: 20vh;
+  width: 40vw;
+}
+
+.ColorPlayer {
+  width: 60vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.Canvas {
+  height: 100%;
+  width: 100%;
+}
+
+.Buttons {
+  width: 10vw;
+  display: flex;
+  justify-content: space-between;
+}
+
+button {
+  padding: 5px 20px 5px;
 }

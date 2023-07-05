@@ -15,3 +15,16 @@ export const ColorNoteMapping = {
   PURPLE: ["A#", "#CFC0ED"],
   MAGENTA: ["F", "#F0CEF3"],
 };
+
+// Converts colors to notes using mapping above, and we attach the octave number
+// based on order selected i.e. first notes selected is octave 2 etc.
+export function convertColorsToNotes(selectedColors) {
+  let notes = [];
+  let octaveIndex = 2;
+  for (const color of selectedColors) {
+    let noteName = ColorNoteMapping[color][0];
+    notes.push(noteName + octaveIndex.toString());
+    octaveIndex++;
+  }
+  return notes;
+}

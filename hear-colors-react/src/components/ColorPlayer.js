@@ -2,42 +2,21 @@ import React, { useState, useRef } from "react";
 import { ColorNoteMapping } from "../ColorNoteMapping";
 import { Canvas } from "@react-three/fiber";
 import * as Tone from "tone";
+import { attachEffectsChain, playSynth, stopSynth } from "./SynthUtils";
 
 export default function ColorPlayer() {
-  const filter = new Tone.Filter(1000, "lowpass").toDestination();
-  const reverb = new Tone.Reverb(6).connect(filter);
-  const pingPong = new Tone.PingPongDelay("8n", 0.3).connect(reverb);
-  const synth = new Tone.MonoSynth().connect(pingPong);
+  const synth = new Tone.MonoSynth();
+  attachEffectsChain(synth);
 
   const [selectedColors, setSelectedColors] = useState([]);
 
-  function convertColorsToNotes(selectedColors) {
-    let notes = [];
-    let octaveIndex = 1;
-    for (const color of selectedColors) {
-      let [noteName, hexColor] = ColorNoteMapping[color];
-      notes.push(noteName + octaveIndex.toString());
-      octaveIndex++;
-    }
-    return notes;
-  }
-
-  function playSynth(selectedColors) {
-    let notes = convertColorsToNotes(selectedColors);
-    var pattern = new Tone.Pattern(function (time, note) {
-      synth.triggerAttackRelease(note, 0.125);
-    }, notes);
-    pattern.start(0);
-    Tone.Transport.start();
-  }
-
-  function stopSynth() {
-    Tone.Transport.stop();
+  function resetColors() {
     setSelectedColors([]);
+    stopSynth();
     console.log(selectedColors);
   }
 
-  function processClick(color) {
+  function processColorSelect(color) {
     setSelectedColors((previousState) => {
       return [...previousState, color];
     });
@@ -53,7 +32,8 @@ export default function ColorPlayer() {
         <ColorSphere
           position={[index, 0, 0]}
           color={hexColor}
-          onClick={() => processClick(color)}
+          selected={selectedColors.includes(color)}
+          onClick={() => processColorSelect(color)}
         ></ColorSphere>
       );
       index += 1;
@@ -64,7 +44,7 @@ export default function ColorPlayer() {
   function ColorSphere(props) {
     const ref = useRef();
     return (
-      <mesh {...props} ref={ref}>
+      <mesh {...props} ref={ref} scale={props.selected ? 1.3 : 1}>
         <sphereGeometry args={[0.5, 32, 16]} />
         <meshStandardMaterial color={props.color} />
       </mesh>
@@ -82,7 +62,9 @@ export default function ColorPlayer() {
       </div>
       <div className="Buttons">
         <button
-          onClick={playSynth(selectedColors)}
+          onClick={() => {
+            playSynth(synth, selectedColors);
+          }}
           disabled={
             // must select at least one color
             Object.keys(selectedColors).length === 0 ||
@@ -92,7 +74,13 @@ export default function ColorPlayer() {
         >
           play
         </button>
-        <button onClick={stopSynth}>reset</button>
+        <button
+          onClick={() => {
+            resetColors();
+          }}
+        >
+          reset
+        </button>
       </div>
     </div>
   );
