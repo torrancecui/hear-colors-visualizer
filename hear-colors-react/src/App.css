@@ -1,0 +1,10 @@
+.App {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+.Header {
+  font-size: 15em;
+  font-family: Helvetica, Arial, sans-serif;
+}
