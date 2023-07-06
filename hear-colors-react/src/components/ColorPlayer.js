@@ -10,15 +10,19 @@ import {
   Environment,
 } from "@react-three/drei";
 import Cube from "./Cube";
+import Gradient from "./Gradient";
 export default function ColorPlayer() {
   const synth = new Tone.MonoSynth();
   attachEffectsChain(synth);
 
   const [selectedColors, setSelectedColors] = useState([]);
+  const [isPlaying, setIsPlaying] = useState(false);
 
   function resetColors() {
     setSelectedColors([]);
     stopSynth();
+    setIsPlaying(false);
+
     console.log(selectedColors);
   }
 
@@ -86,6 +90,10 @@ export default function ColorPlayer() {
             far={1}
             blur={2}
           />
+          <Gradient
+            isPlaying={isPlaying}
+            colors={selectedColors.length > 0 && selectedColors}
+          />
           <ColorBar></ColorBar>
           <Sky />
         </Canvas>
@@ -93,6 +101,8 @@ export default function ColorPlayer() {
       <div className="Buttons">
         <button
           onClick={() => {
+            setIsPlaying(true);
+
             playSynth(synth, selectedColors);
           }}
           disabled={
