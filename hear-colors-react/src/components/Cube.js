@@ -19,7 +19,10 @@ export default function Cube({
       {...props}
       ref={ref}
       scale={props.selected ? 1.2 : 1}
-      onPointerOver={(e) => (e.stopPropagation(), setHover(true))}
+      onPointerOver={(e) => {
+        e.stopPropagation();
+        setHover(true);
+      }}
       onPointerOut={(e) => setHover(false)}
     >
       <boxGeometry />
