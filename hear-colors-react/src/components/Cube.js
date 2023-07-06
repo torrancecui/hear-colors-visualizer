@@ -3,11 +3,11 @@ import { MeshTransmissionMaterial, useCursor } from "@react-three/drei";
 
 export default function Cube({
   color = "white",
-  thickness = 1,
-  roughness = 0.5,
-  envMapIntensity = 1,
+  thickness = 2,
+  roughness = 0.4,
+  envMapIntensity = 2,
   transmission = 1,
-  metalness,
+  metalness = 0,
   ...props
 }) {
   const [hovered, setHover] = useState(false);
