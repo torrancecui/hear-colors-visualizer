@@ -25,12 +25,20 @@ export default function ColorPlayer() {
 
   function ColorBar() {
     let colorBar = [];
-    let index = -5.5;
+    let radius = 3;
+
+    let index = 0;
     for (let color in ColorNoteMapping) {
+      // calculate position in circle
+      let angle =
+        index * ((2 * Math.PI) / Object.keys(ColorNoteMapping).length);
+      let x = radius * Math.cos(angle);
+      let y = radius * Math.sin(angle);
+
       let hexColor = ColorNoteMapping[color][1];
       colorBar.push(
         <ColorSphere
-          position={[index, 0, 0]}
+          position={[x, y, 0]}
           color={hexColor}
           selected={selectedColors.includes(color)}
           onClick={() => processColorSelect(color)}
