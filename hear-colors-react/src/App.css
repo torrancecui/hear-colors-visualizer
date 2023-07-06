@@ -1,15 +1,18 @@
 .App {
   font-family: Helvetica, Arial, sans-serif;
-  padding: 20px;
+  /* padding: 20px; */
   position: relative;
 }
 
 .Header {
-  font-size: 27vh;
+  font-size: 5rem;
   position: absolute;
+  top: 1vh;
+  left: 1vw;
+
   width: 60vw;
-  z-index: -1;
-  opacity: 0.3;
+  z-index: 1;
+  opacity: 0.2;
 }
 
 .ColorPlayer {
@@ -19,14 +22,16 @@
 }
 
 .Canvas {
-  height: 80vh;
-  width: 95vw;
+  height: 100vh;
+  width: 100vw;
 }
 
 .Buttons {
+  position: absolute;
   width: 10vw;
   display: flex;
   justify-content: space-between;
+  bottom: 4vw;
 }
 
 button {
