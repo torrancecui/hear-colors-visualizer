@@ -108,7 +108,7 @@ export default function ColorPlayer() {
             Object.keys(selectedColors).length > 5
           }
         >
-          play
+          {Object.keys(selectedColors).length > 5 ? "max of 5 notes" : "play"}
         </button>
         <button
           onClick={() => {
