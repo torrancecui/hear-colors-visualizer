@@ -33,7 +33,7 @@ export default function ColorPlayer() {
     let colorBar = [];
     let radius = 3;
 
-    let index = 0;
+    let index = -5;
     for (let color in ColorNoteMapping) {
       // calculate position in circle
       let angle =
@@ -44,7 +44,7 @@ export default function ColorPlayer() {
       let hexColor = ColorNoteMapping[color][1];
       colorBar.push(
         <Cube
-          position={[x, y, 0]}
+          position={[index * 1.4, -7, 0]}
           color={hexColor}
           selected={selectedColors.includes(color)}
           onClick={() => processColorSelect(color)}
@@ -68,7 +68,7 @@ export default function ColorPlayer() {
   return (
     <div className="ColorPlayer">
       <div className="Canvas">
-        <Canvas>
+        <Canvas orthographic camera={{ position: [-10, 10, 10], zoom: 100 }}>
           <ambientLight />
           <OrbitControls
             enabled={true}
