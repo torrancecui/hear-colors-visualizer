@@ -4,7 +4,6 @@ import { Canvas } from "@react-three/fiber";
 import * as Tone from "tone";
 import { attachEffectsChain, playSynth, stopSynth } from "./SynthUtils";
 import {
-  Cloud,
   PresentationControls,
   OrbitControls,
   ContactShadows,
@@ -51,7 +50,7 @@ export default function ColorPlayer() {
       colorBar.push(
         <Cube
           // rotation={[0, 0, 0]}
-          position={[index * 1.3, -4, 0]}
+          position={[index * 1.4, -4, 0]}
           color={hexColor}
           selected={selectedColors.includes(color)}
           onClick={() => processColorSelect(color)}
@@ -86,6 +85,8 @@ export default function ColorPlayer() {
             inclination={0}
             azimuth={0.2}
           />
+          <pointLight position={[20, 50, 10]} castShadow />
+          <Environment preset="city" />
 
           <OrbitControls
             minAzimuthAngle={-Math.PI / 4}
@@ -95,9 +96,7 @@ export default function ColorPlayer() {
             enableZoom={false}
             enablePan={false}
           />
-          <pointLight position={[20, 50, 10]} castShadow />
-          <Environment preset="city" />
-
+          {/* You can uncomment this and comment out ^OrbitControls if you want to try different controls */}
           {/* <PresentationControls
             config={{ mass: 2, tension: 500 }}
             snap={{ mass: 4, tension: 300 }}
