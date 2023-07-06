@@ -4,6 +4,8 @@ import { Canvas } from "@react-three/fiber";
 import * as Tone from "tone";
 import { attachEffectsChain, playSynth, stopSynth } from "./SynthUtils";
 import {
+  Cloud,
+  PresentationControls,
   OrbitControls,
   ContactShadows,
   Sky,
@@ -37,7 +39,7 @@ export default function ColorPlayer() {
     let colorBar = [];
     let radius = 3;
 
-    let index = -5;
+    let index = -5.5;
     for (let color in ColorNoteMapping) {
       // calculate position in circle
       let angle =
@@ -48,7 +50,8 @@ export default function ColorPlayer() {
       let hexColor = ColorNoteMapping[color][1];
       colorBar.push(
         <Cube
-          position={[index * 1.4, -7, 0]}
+          // rotation={[0, 0, 0]}
+          position={[index * 1.3, -4, 0]}
           color={hexColor}
           selected={selectedColors.includes(color)}
           onClick={() => processColorSelect(color)}
@@ -72,30 +75,42 @@ export default function ColorPlayer() {
   return (
     <div className="ColorPlayer">
       <div className="Canvas">
-        <Canvas orthographic camera={{ position: [-10, 10, 10], zoom: 100 }}>
-          <ambientLight />
+        <Canvas
+          shadows
+          orthographic
+          camera={{ position: [-10, 5, 10], zoom: 50 }}
+        >
+          <Sky
+            distance={450000}
+            sunPosition={[100, 90, 100]}
+            inclination={0}
+            azimuth={0.2}
+          />
+
           <OrbitControls
-            enabled={true}
-            makeDefault={true}
-            enableZoom={true}
-            enablePan={true}
+            minAzimuthAngle={-Math.PI / 4}
+            maxAzimuthAngle={Math.PI / 4}
+            minPolarAngle={Math.PI / 6}
+            maxPolarAngle={Math.PI - Math.PI / 6}
+            enableZoom={false}
+            enablePan={false}
           />
-          <pointLight position={[10, 10, 10]} />
+          <pointLight position={[20, 50, 10]} castShadow />
           <Environment preset="city" />
-          <ContactShadows
-            frames={1}
-            position={[0, -0.5, 0]}
-            scale={10}
-            opacity={0.4}
-            far={1}
-            blur={2}
-          />
+
+          {/* <PresentationControls
+            config={{ mass: 2, tension: 500 }}
+            snap={{ mass: 4, tension: 300 }}
+            rotation={[0, -Math.PI / 4, 0]}
+            polar={[-Math.PI / 3, Math.PI / 3]}
+            azimuth={[-Math.PI / 1.4, Math.PI / 2]}
+          > */}
           <Gradient
             isPlaying={isPlaying}
             colors={selectedColors.length > 0 && selectedColors}
           />
           <ColorBar></ColorBar>
-          <Sky />
+          {/* </PresentationControls> */}
         </Canvas>
       </div>
       <div className="Buttons">
