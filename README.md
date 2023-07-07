@@ -1,4 +1,4 @@
-# how to hear colors
+# Hear Colors
 
 Web app to see how a color or color combination would musically sound like.
 
