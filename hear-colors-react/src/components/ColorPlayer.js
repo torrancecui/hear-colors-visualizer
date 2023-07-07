@@ -3,7 +3,7 @@ import { ColorNoteMapping } from "../ColorNoteMapping";
 import { Canvas } from "@react-three/fiber";
 import * as Tone from "tone";
 import { IconButton } from "rsuite";
-import { Off, Reload } from "@rsuite/icons";
+import { Reload } from "@rsuite/icons";
 import { attachEffectsChain, playSynth, stopSynth } from "./SynthUtils";
 
 import {
@@ -31,10 +31,11 @@ export default function ColorPlayer() {
 
   // auto reset & resume synth when colors are added/removed during playback
   useEffect(() => {
-    if (isPlaying) {
-      stopSynth();
-      playSynth(arpeggiator, synth, selectedColors);
-    }
+    stopSynth();
+    playSynth(arpeggiator, synth, selectedColors);
+    Object.keys(selectedColors).length === 0
+      ? setIsPlaying(false)
+      : setIsPlaying(true);
   }, [arpeggiator, synth, isPlaying, selectedColors]);
 
   function resetSynth() {
@@ -122,7 +123,8 @@ export default function ColorPlayer() {
         </Canvas>
       </div>
       <div className="Buttons">
-        <IconButton
+        {/* don't think we need this button since there is autoplay now */}
+        {/* <IconButton
           icon={<Off />}
           className="button"
           onClick={() => {
@@ -136,7 +138,7 @@ export default function ColorPlayer() {
             Object.keys(selectedColors).length > 4
           }
           size="lg"
-        />
+        /> */}
         <IconButton
           icon={<Reload />}
           className="button"
