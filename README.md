@@ -4,7 +4,7 @@ Web app to see how a color or color combination would musically sound like.
 
 ### Known Issues
 
-After resetting palette and attempting to create new one, audio does not start again.
+Tone.js takes a dump sometimes when too many state changes are made.
 
 ### More Info
 
