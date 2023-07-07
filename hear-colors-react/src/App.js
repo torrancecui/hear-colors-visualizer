@@ -1,5 +1,5 @@
 import "./App.css";
-import Header from "./Header";
+import Header from "./components/Header";
 import ColorPlayer from "./components/ColorPlayer";
 
 function App() {
