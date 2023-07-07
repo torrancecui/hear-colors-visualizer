@@ -39,6 +39,15 @@ export default function ColorPlayer() {
     console.log(selectedColors);
   }
 
+  function processColorDeselect(color) {
+    setSelectedColors((previousState) => {
+      return previousState.filter(function (element) {
+        return element !== color;
+      });
+    });
+    console.log(selectedColors);
+  }
+
   function ColorBar() {
     let colorBar = [];
     let index = -2;
@@ -50,7 +59,11 @@ export default function ColorPlayer() {
           position={[index * 1.4, -4, 0]}
           color={hexColor}
           selected={selectedColors.includes(color)}
-          onClick={() => processColorSelect(color)}
+          onClick={() => {
+            selectedColors.includes(color)
+              ? processColorDeselect(color)
+              : processColorSelect(color);
+          }}
         ></Cube>
       );
       index += 1;
