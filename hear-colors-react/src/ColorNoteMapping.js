@@ -40,7 +40,7 @@ export function convertColorsToNotes(selectedColors) {
   for (const color of selectedColors) {
     let noteName = ColorNoteMapping[color][0];
     notes.push(noteName + octaveIndex.toString());
-    octaveIndex === 2 ? (octaveIndex += 2) : octaveIndex++;
+    octaveIndex++;
   }
   return notes;
 }

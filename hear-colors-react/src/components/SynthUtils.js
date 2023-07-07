@@ -3,12 +3,12 @@ import { convertColorsToNotes } from "../ColorNoteMapping";
 
 export function attachEffectsChain(inputSignal) {
   const gain = new Tone.Gain(0.3);
-  const filter = new Tone.Filter(10000, "lowpass");
+  // const filter = new Tone.Filter(10000, "lowpass");
   const reverb = new Tone.Reverb(8);
   const pingPong = new Tone.PingPongDelay("8n", 0.5);
   // const crusher = new Tone.BitCrusher(2);
 
-  inputSignal.chain(filter, pingPong, reverb, gain, Tone.Destination);
+  inputSignal.chain(pingPong, reverb, gain, Tone.Destination);
 }
 
 export function playSynth(arpeggiator, synth, selectedColors) {
@@ -22,9 +22,7 @@ export function playSynth(arpeggiator, synth, selectedColors) {
   }
 }
 
-export function stopSynth(arpeggiator) {
-  arpeggiator.dispose();
-  arpeggiator.cancel();
-  arpeggiator.stop(0);
+export function stopSynth() {
   Tone.Transport.stop();
+  Tone.Transport.cancel(0);
 }

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { ColorNoteMapping } from "../ColorNoteMapping";
 import { Canvas } from "@react-three/fiber";
 import * as Tone from "tone";
@@ -17,31 +17,47 @@ import Cube from "./Cube";
 import Gradient from "./Gradient";
 
 export default function ColorPlayer() {
-  const synth = new Tone.MonoSynth();
-  let arpeggiator = new Tone.Pattern();
+  const synth = useMemo(() => {
+    return new Tone.MonoSynth();
+  }, []);
+  let arpeggiator = useMemo(() => {
+    return new Tone.Pattern();
+  }, []);
+
   attachEffectsChain(synth);
 
   const [selectedColors, setSelectedColors] = useState([]);
   const [isPlaying, setIsPlaying] = useState(false);
 
+  // auto reset & resume synth when colors are added/removed during playback
+  useEffect(() => {
+    if (isPlaying) {
+      stopSynth();
+      playSynth(arpeggiator, synth, selectedColors);
+    }
+  }, [arpeggiator, synth, isPlaying, selectedColors]);
+
   function resetSynth() {
     setSelectedColors([]);
-    stopSynth(arpeggiator);
+    stopSynth();
     setIsPlaying(false);
   }
 
-  function processColorSelect(color) {
-    setSelectedColors((previousState) => {
-      return [...previousState, color];
-    });
-  }
-
-  function processColorDeselect(color) {
-    setSelectedColors((previousState) => {
-      return previousState.filter(function (element) {
-        return element !== color;
-      });
-    });
+  function processColorClick(color) {
+    if (Object.keys(selectedColors).length > 4) {
+      alert("Maximum colors reached.");
+      return;
+    }
+    // if color is already selected we remove from state array, else we add to state array
+    selectedColors.includes(color)
+      ? setSelectedColors((previousState) => {
+          return previousState.filter(function (element) {
+            return element !== color;
+          });
+        })
+      : setSelectedColors((previousState) => {
+          return [...previousState, color];
+        });
   }
 
   function ColorBar() {
@@ -55,9 +71,7 @@ export default function ColorPlayer() {
           color={hexColor}
           selected={selectedColors.includes(color)}
           onClick={() => {
-            selectedColors.includes(color)
-              ? processColorDeselect(color)
-              : processColorSelect(color);
+            processColorClick(color);
           }}
         ></Cube>
       );
@@ -118,8 +132,8 @@ export default function ColorPlayer() {
           disabled={
             // must select at least one color
             Object.keys(selectedColors).length === 0 ||
-            // must be less than five to constrain octaves
-            Object.keys(selectedColors).length > 5
+            // must be less than 4 to constrain octaves
+            Object.keys(selectedColors).length > 4
           }
           size="lg"
         />
