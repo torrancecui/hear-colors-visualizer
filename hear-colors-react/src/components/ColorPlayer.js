@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { ColorNoteMapping } from "../ColorNoteMapping";
 import { Canvas } from "@react-three/fiber";
 import * as Tone from "tone";
+import { IconButton } from "rsuite";
+import { Off, Reload } from "@rsuite/icons";
 import { attachEffectsChain, playSynth, stopSynth } from "./SynthUtils";
 import {
   PresentationControls,
@@ -12,6 +14,7 @@ import {
 } from "@react-three/drei";
 import Cube from "./Cube";
 import Gradient from "./Gradient";
+
 export default function ColorPlayer() {
   const synth = new Tone.MonoSynth();
   let arpeggiator = new Tone.Pattern();
@@ -37,7 +40,7 @@ export default function ColorPlayer() {
 
   function ColorBar() {
     let colorBar = [];
-    let index = -5.5;
+    let index = -2;
     for (let color in ColorNoteMapping) {
       let hexColor = ColorNoteMapping[color][1];
       colorBar.push(
@@ -96,7 +99,9 @@ export default function ColorPlayer() {
         </Canvas>
       </div>
       <div className="Buttons">
-        <button
+        <IconButton
+          icon={<Off />}
+          className="button"
           onClick={() => {
             setIsPlaying(true);
             playSynth(arpeggiator, synth, selectedColors);
@@ -107,16 +112,17 @@ export default function ColorPlayer() {
             // must be less than five to constrain octaves
             Object.keys(selectedColors).length > 5
           }
-        >
-          {Object.keys(selectedColors).length > 5 ? "max of 5 notes" : "play"}
-        </button>
-        <button
+          size="lg"
+        />
+        <IconButton
+          icon={<Reload />}
+          className="button"
           onClick={() => {
             resetSynth();
           }}
-        >
-          reset
-        </button>
+          circle
+          size="lg"
+        />
       </div>
     </div>
   );

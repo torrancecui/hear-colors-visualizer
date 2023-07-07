@@ -1,17 +1,29 @@
 .App {
   font-family: Helvetica, Arial, sans-serif;
   position: relative;
+  display: flex;
 }
 
 .Header {
-  font-size: 5rem;
   position: absolute;
-  top: 1vh;
-  left: 1vw;
-
-  width: 60vw;
+  align-self: center;
+  width: 30vw;
+  padding: 50px;
+  line-height: 0.9;
   z-index: 1;
-  opacity: 0.2;
+
+  display: flex;
+  flex-direction: column;
+}
+
+.HeaderTitle {
+  font-size: 10vw;
+  opacity: 0.7;
+}
+.HeaderDesc {
+  padding-top: 3vh;
+  font-size: 1rem;
+  opacity: 0.4;
 }
 
 .ColorPlayer {
@@ -30,9 +42,16 @@
   width: 10vw;
   display: flex;
   justify-content: space-between;
-  bottom: 4vw;
+  bottom: 7vw;
 }
 
-button {
-  padding: 5px 20px 5px;
+.button {
+  all: unset;
+  cursor: pointer;
+  font-size: 2em;
+  opacity: 0.7;
+}
+
+.button:disabled {
+  opacity: 0.3;
 }

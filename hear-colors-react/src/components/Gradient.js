@@ -25,8 +25,8 @@ export default function Gradient({ isPlaying = false, colors = null }) {
   return (
     <mesh
       rotation={[0, 0, Math.PI / 2]}
-      position={[0, 1, -2]}
-      scale={[6, 22, 1]}
+      position={[5, 1, -2]}
+      scale={[6, 18, 1]}
     >
       <planeGeometry args={[1, 1, 32, 32]} />
       <MeshDistortMaterial ref={ref} speed={5}>
