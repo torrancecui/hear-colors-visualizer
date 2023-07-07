@@ -5,7 +5,7 @@ export default function Header() {
         how to <i>hear</i> <div className="HeaderGradient">colors.</div>
       </div>
       <div className="HeaderDesc">
-        Create your palette and hear how it sounds.
+        Create your palette and <i>hear</i> how it sounds.
       </div>
     </div>
   );

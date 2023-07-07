@@ -28,15 +28,12 @@ export default function ColorPlayer() {
     setSelectedColors([]);
     stopSynth(arpeggiator);
     setIsPlaying(false);
-
-    console.log(selectedColors);
   }
 
   function processColorSelect(color) {
     setSelectedColors((previousState) => {
       return [...previousState, color];
     });
-    console.log(selectedColors);
   }
 
   function processColorDeselect(color) {
@@ -45,7 +42,6 @@ export default function ColorPlayer() {
         return element !== color;
       });
     });
-    console.log(selectedColors);
   }
 
   function ColorBar() {
@@ -55,7 +51,6 @@ export default function ColorPlayer() {
       let hexColor = ColorNoteMapping[color][1];
       colorBar.push(
         <Cube
-          // rotation={[0, 0, 0]}
           position={[index * 1.4, -4, 0]}
           color={hexColor}
           selected={selectedColors.includes(color)}
