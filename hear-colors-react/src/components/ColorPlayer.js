@@ -44,20 +44,20 @@ export default function ColorPlayer() {
   }
 
   function processColorClick(color) {
-    if (Object.keys(selectedColors).length > 4) {
-      alert("Maximum colors reached.");
-      return;
-    }
     // if color is already selected we remove from state array, else we add to state array
-    selectedColors.includes(color)
-      ? setSelectedColors((previousState) => {
-          return previousState.filter(function (element) {
-            return element !== color;
-          });
-        })
-      : setSelectedColors((previousState) => {
-          return [...previousState, color];
+    if (selectedColors.includes(color)) {
+      setSelectedColors((previousState) => {
+        return previousState.filter(function (element) {
+          return element !== color;
         });
+      });
+    } else {
+      Object.keys(selectedColors).length > 4
+        ? alert("Maximum colors reached.")
+        : setSelectedColors((previousState) => {
+            return [...previousState, color];
+          });
+    }
   }
 
   function ColorBar() {
