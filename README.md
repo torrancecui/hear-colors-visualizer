@@ -1,6 +1,7 @@
-# music_visualizer
+# how to hear colors
 
-# to start
-### `cd hear-colors-react`
-### `npm install`
-### `npm start`
+Web app to see how a color or color combination would musically sound like.
+
+Built in `React.js`, `Three.js`, and `Tone.js`
+
+https://hear-colors.netlify.app/
