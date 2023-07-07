@@ -2,8 +2,6 @@ import React, { useEffect, useMemo, useState } from "react";
 import { ColorNoteMapping } from "../ColorNoteMapping";
 import { Canvas } from "@react-three/fiber";
 import * as Tone from "tone";
-import { IconButton } from "rsuite";
-import { Reload } from "@rsuite/icons";
 import { attachEffectsChain, playSynth, stopSynth } from "./SynthUtils";
 
 import {
@@ -27,22 +25,12 @@ export default function ColorPlayer() {
   attachEffectsChain(synth);
 
   const [selectedColors, setSelectedColors] = useState([]);
-  const [isPlaying, setIsPlaying] = useState(false);
 
   // auto reset & resume synth when colors are added/removed during playback
   useEffect(() => {
     stopSynth();
     playSynth(arpeggiator, synth, selectedColors);
-    Object.keys(selectedColors).length === 0
-      ? setIsPlaying(false)
-      : setIsPlaying(true);
-  }, [arpeggiator, synth, isPlaying, selectedColors]);
-
-  function resetSynth() {
-    setSelectedColors([]);
-    stopSynth();
-    setIsPlaying(false);
-  }
+  }, [arpeggiator, synth, selectedColors]);
 
   function processColorClick(color) {
     // if color is already selected we remove from state array, else we add to state array
@@ -87,7 +75,7 @@ export default function ColorPlayer() {
         <Canvas
           shadows
           orthographic
-          camera={{ position: [-10, 5, 10], zoom: 50 }}
+          camera={{ position: [-20, 5, 10], zoom: 50 }}
         >
           <Sky
             distance={450000}
@@ -115,39 +103,12 @@ export default function ColorPlayer() {
             azimuth={[-Math.PI / 1.4, Math.PI / 2]}
           >
             <Gradient
-              isPlaying={isPlaying}
-              colors={selectedColors.length > 0 && selectedColors}
+              isPlaying={Object.keys(selectedColors).length > 0}
+              colors={Object.keys(selectedColors).length > 0 && selectedColors}
             />
             <ColorBar></ColorBar>
           </PresentationControls>
         </Canvas>
-      </div>
-      <div className="Buttons">
-        {/* don't think we need this button since there is autoplay now */}
-        {/* <IconButton
-          icon={<Off />}
-          className="button"
-          onClick={() => {
-            setIsPlaying(true);
-            playSynth(arpeggiator, synth, selectedColors);
-          }}
-          disabled={
-            // must select at least one color
-            Object.keys(selectedColors).length === 0 ||
-            // must be less than 4 to constrain octaves
-            Object.keys(selectedColors).length > 4
-          }
-          size="lg"
-        /> */}
-        <IconButton
-          icon={<Reload />}
-          className="button"
-          onClick={() => {
-            resetSynth();
-          }}
-          circle
-          size="lg"
-        />
       </div>
     </div>
   );

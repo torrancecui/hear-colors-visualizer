@@ -15,7 +15,8 @@ export function playSynth(arpeggiator, synth, selectedColors) {
   if (selectedColors.length > 0) {
     let notes = convertColorsToNotes(selectedColors);
     arpeggiator = new Tone.Pattern(function (time, note) {
-      synth.triggerAttackRelease(note, 0.0625);
+      const now = Tone.now();
+      synth.triggerAttackRelease(note, 0.0625, now + 0.5);
     }, notes);
     arpeggiator.start(0);
     Tone.Transport.start();
