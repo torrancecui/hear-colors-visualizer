@@ -1,5 +1,6 @@
 import { useState, useRef } from "react";
 import { MeshTransmissionMaterial, useCursor } from "@react-three/drei";
+import { useFrame } from "@react-three/fiber";
 
 export default function Cube({
   color = "white",
@@ -13,12 +14,17 @@ export default function Cube({
   const [hovered, setHover] = useState(false);
   const ref = useRef();
 
+  useFrame((state, delta) => {
+    ref.current.rotation.x += props.selected ? delta : 0;
+    ref.current.rotation.y += props.selected ? delta : 0;
+  });
+
   useCursor(hovered);
   return (
     <mesh
       {...props}
       ref={ref}
-      scale={props.selected ? 1.2 : 1}
+      scale={props.selected ? 1.05 : 1}
       onPointerOver={(e) => {
         e.stopPropagation();
         setHover(true);
